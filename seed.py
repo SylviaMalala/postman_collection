@@ -1,7 +1,13 @@
-from app import app, db
-from models import Hero, Power, HeroPower
+from flask import Flask
+from models import db, Hero, Power, HeroPower
 
 def seed_database():
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///superheroes.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    
+    db.init_app(app)
+    
     with app.app_context():
         # Clear existing data
         print("Clearing existing data...")
